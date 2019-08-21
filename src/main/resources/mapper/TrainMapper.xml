@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jalen.tts.dao.TrainMapper">
+  <resultMap id="BaseResultMap" type="com.jalen.tts.bean.Train">
+    <id column="TRAIN_ID" jdbcType="DECIMAL" property="trainId" />
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="TRAIN_NAME" jdbcType="VARCHAR" property="trainName" />
+    <result column="TRAIN_TYPE" jdbcType="VARCHAR" property="trainType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    TRAIN_ID, ID, TRAIN_NAME, TRAIN_TYPE
+  </sql>
+  <select id="selectByExample" parameterType="com.jalen.tts.bean.TrainExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TRAIN
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TRAIN
+    where TRAIN_ID = #{trainId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from TRAIN
+    where TRAIN_ID = #{trainId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jalen.tts.bean.TrainExample">
+    delete from TRAIN
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jalen.tts.bean.Train">
+    insert into TRAIN (TRAIN_ID, ID, TRAIN_NAME, 
+      TRAIN_TYPE)
+    values (#{trainId,jdbcType=DECIMAL}, #{id,jdbcType=DECIMAL}, #{trainName,jdbcType=VARCHAR}, 
+      #{trainType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jalen.tts.bean.Train">
+    insert into TRAIN
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="trainId != null">
+        TRAIN_ID,
+      </if>
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="trainName != null">
+        TRAIN_NAME,
+      </if>
+      <if test="trainType != null">
+        TRAIN_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="trainId != null">
+        #{trainId,jdbcType=DECIMAL},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="trainName != null">
+        #{trainName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainType != null">
+        #{trainType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jalen.tts.bean.TrainExample" resultType="java.lang.Long">
+    select count(*) from TRAIN
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TRAIN
+    <set>
+      <if test="record.trainId != null">
+        TRAIN_ID = #{record.trainId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.trainName != null">
+        TRAIN_NAME = #{record.trainName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainType != null">
+        TRAIN_TYPE = #{record.trainType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TRAIN
+    set TRAIN_ID = #{record.trainId,jdbcType=DECIMAL},
+      ID = #{record.id,jdbcType=DECIMAL},
+      TRAIN_NAME = #{record.trainName,jdbcType=VARCHAR},
+      TRAIN_TYPE = #{record.trainType,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jalen.tts.bean.Train">
+    update TRAIN
+    <set>
+      <if test="id != null">
+        ID = #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="trainName != null">
+        TRAIN_NAME = #{trainName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainType != null">
+        TRAIN_TYPE = #{trainType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TRAIN_ID = #{trainId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jalen.tts.bean.Train">
+    update TRAIN
+    set ID = #{id,jdbcType=DECIMAL},
+      TRAIN_NAME = #{trainName,jdbcType=VARCHAR},
+      TRAIN_TYPE = #{trainType,jdbcType=VARCHAR}
+    where TRAIN_ID = #{trainId,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jalen.tts.dao.TrainStationMapper">
+  <resultMap id="BaseResultMap" type="com.jalen.tts.bean.TrainStation">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="TRAIN_ID" jdbcType="DECIMAL" property="trainId" />
+    <result column="STATION_ID" jdbcType="DECIMAL" property="stationId" />
+    <result column="STATION_NAME" jdbcType="VARCHAR" property="stationName" />
+    <result column="ARRIVE_TIME" jdbcType="TIMESTAMP" property="arriveTime" />
+    <result column="STOP_TIME" jdbcType="DECIMAL" property="stopTime" />
+    <result column="DISTANCE" jdbcType="DECIMAL" property="distance" />
+  </resultMap>
+  <resultMap id="BaseResultMap_2" type="com.jalen.tts.bean.SelectedResults">
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="TRAIN_ID" jdbcType="DECIMAL" property="trainId" />
+    <result column="TRAIN_NAME" jdbcType="VARCHAR" property="trainName" />
+    <result column="START_STATION_ID" jdbcType="DECIMAL" property="startStationId" />
+    <result column="ARRIVE_STATION_ID" jdbcType="DECIMAL" property="arriveStationId" />
+    <result column="START_STATION" jdbcType="VARCHAR" property="startStation" />
+    <result column="ARRIVE_STATION" jdbcType="VARCHAR" property="arriveStation" />
+    <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="ARRIVE_TIME" jdbcType="TIMESTAMP" property="arriveTime" />
+    <result column="TOTAL_DISTANCE" jdbcType="DECIMAL" property="totalDistance" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, TRAIN_ID, STATION_ID, STATION_NAME, ARRIVE_TIME, STOP_TIME, DISTANCE
+  </sql>
+  <select id="selectByExample" parameterType="com.jalen.tts.bean.TrainStationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TRAIN_STATION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TRAIN_STATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from TRAIN_STATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jalen.tts.bean.TrainStationExample">
+    delete from TRAIN_STATION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jalen.tts.bean.TrainStation">
+    insert into TRAIN_STATION (ID, TRAIN_ID, STATION_ID, 
+      STATION_NAME, ARRIVE_TIME, STOP_TIME, 
+      DISTANCE)
+    values (#{id,jdbcType=DECIMAL}, #{trainId,jdbcType=DECIMAL}, #{stationId,jdbcType=DECIMAL}, 
+      #{stationName,jdbcType=VARCHAR}, #{arriveTime,jdbcType=TIMESTAMP}, #{stopTime,jdbcType=DECIMAL}, 
+      #{distance,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jalen.tts.bean.TrainStation">
+    insert into TRAIN_STATION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="trainId != null">
+        TRAIN_ID,
+      </if>
+      <if test="stationId != null">
+        STATION_ID,
+      </if>
+      <if test="stationName != null">
+        STATION_NAME,
+      </if>
+      <if test="arriveTime != null">
+        ARRIVE_TIME,
+      </if>
+      <if test="stopTime != null">
+        STOP_TIME,
+      </if>
+      <if test="distance != null">
+        DISTANCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="trainId != null">
+        #{trainId,jdbcType=DECIMAL},
+      </if>
+      <if test="stationId != null">
+        #{stationId,jdbcType=DECIMAL},
+      </if>
+      <if test="stationName != null">
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="arriveTime != null">
+        #{arriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopTime != null">
+        #{stopTime,jdbcType=DECIMAL},
+      </if>
+      <if test="distance != null">
+        #{distance,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jalen.tts.bean.TrainStationExample" resultType="java.lang.Long">
+    select count(*) from TRAIN_STATION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TRAIN_STATION
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.trainId != null">
+        TRAIN_ID = #{record.trainId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.stationId != null">
+        STATION_ID = #{record.stationId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.stationName != null">
+        STATION_NAME = #{record.stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arriveTime != null">
+        ARRIVE_TIME = #{record.arriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stopTime != null">
+        STOP_TIME = #{record.stopTime,jdbcType=DECIMAL},
+      </if>
+      <if test="record.distance != null">
+        DISTANCE = #{record.distance,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TRAIN_STATION
+    set ID = #{record.id,jdbcType=DECIMAL},
+      TRAIN_ID = #{record.trainId,jdbcType=DECIMAL},
+      STATION_ID = #{record.stationId,jdbcType=DECIMAL},
+      STATION_NAME = #{record.stationName,jdbcType=VARCHAR},
+      ARRIVE_TIME = #{record.arriveTime,jdbcType=TIMESTAMP},
+      STOP_TIME = #{record.stopTime,jdbcType=DECIMAL},
+      DISTANCE = #{record.distance,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jalen.tts.bean.TrainStation">
+    update TRAIN_STATION
+    <set>
+      <if test="trainId != null">
+        TRAIN_ID = #{trainId,jdbcType=DECIMAL},
+      </if>
+      <if test="stationId != null">
+        STATION_ID = #{stationId,jdbcType=DECIMAL},
+      </if>
+      <if test="stationName != null">
+        STATION_NAME = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="arriveTime != null">
+        ARRIVE_TIME = #{arriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopTime != null">
+        STOP_TIME = #{stopTime,jdbcType=DECIMAL},
+      </if>
+      <if test="distance != null">
+        DISTANCE = #{distance,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jalen.tts.bean.TrainStation">
+    update TRAIN_STATION
+    set TRAIN_ID = #{trainId,jdbcType=DECIMAL},
+      STATION_ID = #{stationId,jdbcType=DECIMAL},
+      STATION_NAME = #{stationName,jdbcType=VARCHAR},
+      ARRIVE_TIME = #{arriveTime,jdbcType=TIMESTAMP},
+      STOP_TIME = #{stopTime,jdbcType=DECIMAL},
+      DISTANCE = #{distance,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <select id="selectTrainByFromAndTo" parameterType="com.jalen.tts.bean.SelectedResults" resultMap="BaseResultMap_2">
+  	select a.train_id, train_name, a.station_id start_station_id, b.station_id arrive_station_id, a.station_name start_station, b.station_name arrive_station, a.arrive_time start_time, b.arrive_time arrive_time, (b.distance - a.distance) total_distance
+	from TRAIN_STATION a,TRAIN_STATION b,TRAIN c 
+	where TO_CHAR(a.arrive_time,'yyyy-mm-dd') = #{chosedDate, jdbcType=VARCHAR} and a.station_name = #{startStation, jdbcType=VARCHAR} and b.station_name = #{arriveStation, jdbcType=VARCHAR} and a.station_id &lt; b.station_id and a.train_id = b.train_id and a.train_id = c.train_id
+  </select>
+  <select id="getSelectsCount" resultType="java.lang.Integer">
+  	SELECT count(*)
+	FROM SELECT_RESULTS
+  </select>
+</mapper>

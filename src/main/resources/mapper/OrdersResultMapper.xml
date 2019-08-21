@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jalen.tts.dao.OrdersResultMapper">
+  <resultMap id="BaseResultMap" type="com.jalen.tts.bean.OrdersResult">
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="TRAIN_ID" jdbcType="DECIMAL" property="trainId" />
+    <result column="TRAIN_NAME" jdbcType="VARCHAR" property="trainName" />
+    <result column="CARRIAGE" jdbcType="DECIMAL" property="carriage" />
+    <result column="SEAT_LOCATION" jdbcType="VARCHAR" property="seatLocation" />
+    <result column="START_STATION" jdbcType="VARCHAR" property="startStation" />
+    <result column="ARRIVE_STATION" jdbcType="VARCHAR" property="arriveStation" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, TRAIN_ID, TRAIN_NAME, CARRIAGE, SEAT_LOCATION, START_STATION, ARRIVE_STATION, 
+    PRICE, CREATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.jalen.tts.bean.OrdersResultExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORDERS_RESULT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.jalen.tts.bean.OrdersResultExample">
+    delete from ORDERS_RESULT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jalen.tts.bean.OrdersResult">
+    insert into ORDERS_RESULT (ID, TRAIN_ID, TRAIN_NAME, 
+      CARRIAGE, SEAT_LOCATION, START_STATION, 
+      ARRIVE_STATION, PRICE, CREATE_TIME
+      )
+    values (#{id,jdbcType=DECIMAL}, #{trainId,jdbcType=DECIMAL}, #{trainName,jdbcType=VARCHAR}, 
+      #{carriage,jdbcType=DECIMAL}, #{seatLocation,jdbcType=VARCHAR}, #{startStation,jdbcType=VARCHAR}, 
+      #{arriveStation,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jalen.tts.bean.OrdersResult">
+    insert into ORDERS_RESULT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="trainId != null">
+        TRAIN_ID,
+      </if>
+      <if test="trainName != null">
+        TRAIN_NAME,
+      </if>
+      <if test="carriage != null">
+        CARRIAGE,
+      </if>
+      <if test="seatLocation != null">
+        SEAT_LOCATION,
+      </if>
+      <if test="startStation != null">
+        START_STATION,
+      </if>
+      <if test="arriveStation != null">
+        ARRIVE_STATION,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="trainId != null">
+        #{trainId,jdbcType=DECIMAL},
+      </if>
+      <if test="trainName != null">
+        #{trainName,jdbcType=VARCHAR},
+      </if>
+      <if test="carriage != null">
+        #{carriage,jdbcType=DECIMAL},
+      </if>
+      <if test="seatLocation != null">
+        #{seatLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="startStation != null">
+        #{startStation,jdbcType=VARCHAR},
+      </if>
+      <if test="arriveStation != null">
+        #{arriveStation,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jalen.tts.bean.OrdersResultExample" resultType="java.lang.Long">
+    select count(*) from ORDERS_RESULT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ORDERS_RESULT
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.trainId != null">
+        TRAIN_ID = #{record.trainId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.trainName != null">
+        TRAIN_NAME = #{record.trainName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carriage != null">
+        CARRIAGE = #{record.carriage,jdbcType=DECIMAL},
+      </if>
+      <if test="record.seatLocation != null">
+        SEAT_LOCATION = #{record.seatLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startStation != null">
+        START_STATION = #{record.startStation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arriveStation != null">
+        ARRIVE_STATION = #{record.arriveStation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        PRICE = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ORDERS_RESULT
+    set ID = #{record.id,jdbcType=DECIMAL},
+      TRAIN_ID = #{record.trainId,jdbcType=DECIMAL},
+      TRAIN_NAME = #{record.trainName,jdbcType=VARCHAR},
+      CARRIAGE = #{record.carriage,jdbcType=DECIMAL},
+      SEAT_LOCATION = #{record.seatLocation,jdbcType=VARCHAR},
+      START_STATION = #{record.startStation,jdbcType=VARCHAR},
+      ARRIVE_STATION = #{record.arriveStation,jdbcType=VARCHAR},
+      PRICE = #{record.price,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <select id="getOrdersByUserId" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+  	SELECT o.train_id,train_name,carriage,seat_location,o.start_station,o.arrive_station,o.price,o.create_time
+	FROM ORDERS o, TRAIN_SEAT ts, TRAIN t
+	WHERE o.train_id = t.train_id and o.train_id = ts.train_id and o.seat_id = ts.seat_id and o.user_id = #{userId, jdbcType=DECIMAL}
+  </select>
+</mapper>
